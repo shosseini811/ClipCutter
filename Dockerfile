@@ -11,7 +11,13 @@ ENV PYTHONUNBUFFERED=1 \
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    # Required for video processing
     ffmpeg \
+    # Required for moviepy
+    python3-dev \
+    python3-numpy \
+    # Required for building Python packages
+    build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -20,15 +26,18 @@ RUN useradd -m appuser && \
     mkdir -p downloads && \
     chown -R appuser:appuser /app downloads
 
+# Copy and install requirements first to leverage Docker cache
+COPY requirements.txt .
+RUN pip uninstall -y moviepy && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir moviepy==1.0.3 && \
+    chown -R appuser:appuser /app
+
 # Switch to non-root user
 USER appuser
 
-# Copy and install requirements first to leverage Docker cache
-COPY --chown=appuser:appuser requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
-
 # Copy application files
-COPY --chown=appuser:appuser clipcutter.py .env.example ./
+COPY clipcutter.py .env.example ./
 RUN cp .env.example .env
 
 # Command to run the application

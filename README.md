@@ -83,6 +83,11 @@ docker run -it \
   clipcutter
 ```
 
+The Docker image includes all necessary dependencies:
+- FFmpeg for video processing
+- Python packages from requirements.txt
+- System dependencies for video processing
+
 The `-v` flags create volume mounts that:
 - Share the downloads directory between your computer and the container
 - Make your .env file available to the container (read-only)
