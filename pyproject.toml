@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "clipcutter"
+version = "0.1.0"
+description = "A tool for cutting and processing video clips"
+authors = ["Sohail Hosseini <s.sadathosseini@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+yt-dlp = "^2023.11.16"
+moviepy = "^1.0.3"
+inquirer = "^3.1.3"
+google-api-python-client = "^2.118.0"
+python-dotenv = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

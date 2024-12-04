@@ -28,9 +28,7 @@ RUN useradd -m appuser && \
 
 # Copy and install requirements first to leverage Docker cache
 COPY requirements.txt .
-RUN pip uninstall -y moviepy && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir moviepy==1.0.3 && \
+RUN pip install --no-cache-dir -r requirements.txt && \
     chown -R appuser:appuser /app
 
 # Switch to non-root user
